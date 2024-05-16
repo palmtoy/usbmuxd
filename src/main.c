@@ -117,6 +117,10 @@ static int create_socket(void) {
 
 static void handle_signal(int sig)
 {
+	if (sig == SIGINT){
+		usbmuxd_log(LL_INFO,"Caught signal %d, ignoring.", sig);
+		return;
+	}
 	if (sig != SIGUSR1 && sig != SIGUSR2) {
 		usbmuxd_log(LL_NOTICE,"Caught signal %d, exiting", sig);
 		should_exit = 1;
@@ -148,7 +152,7 @@ static void set_signal_handlers(void)
 
 	// Mask all signals we handle. They will be unmasked by ppoll().
 	sigemptyset(&set);
-	// sigaddset(&set, SIGINT);
+	sigaddset(&set, SIGINT);
 	sigaddset(&set, SIGQUIT);
 	sigaddset(&set, SIGTERM);
 	sigaddset(&set, SIGUSR1);
@@ -157,7 +161,7 @@ static void set_signal_handlers(void)
 
 	memset(&sa, 0, sizeof(struct sigaction));
 	sa.sa_handler = handle_signal;
-	// sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGTERM, &sa, NULL);
 	sigaction(SIGUSR1, &sa, NULL);
