@@ -118,7 +118,8 @@ static int create_socket(void) {
 static void handle_signal(int sig)
 {
 	usbmuxd_log(LL_NOTICE,"_handle_signal ~ Caught signal %d and SIGINT is %d, SIGUSR1 = %d, SIGUSR2 = %d go on", sig, SIGINT, SIGUSR1, SIGUSR2);
-	if (sig == SIGINT){
+	// _handle_signal ~ Caught signal 10 and SIGINT is 2, SIGUSR1 = 10, SIGUSR2 = 12 go on
+	if (sig == SIGUSR1){
 		usbmuxd_log(LL_NOTICE,"Caught signal %d, ignoring", sig);
 		return;
 	}
