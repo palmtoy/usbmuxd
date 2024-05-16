@@ -117,8 +117,9 @@ static int create_socket(void) {
 
 static void handle_signal(int sig)
 {
+	usbmuxd_log(LL_NOTICE,"_handle_signal ~ Caught signal %d, go on", sig);
 	if (sig == SIGINT){
-		usbmuxd_log(LL_INFO,"Caught signal %d, ignoring.", sig);
+		usbmuxd_log(LL_NOTICE,"Caught signal %d, ignoring", sig);
 		return;
 	}
 	if (sig != SIGUSR1 && sig != SIGUSR2) {
