@@ -126,6 +126,7 @@ static void handle_signal(int sig)
 		usbmuxd_log(LL_NOTICE,"Caught signal %d, exiting", sig);
 		should_exit = 1;
 	} else {
+		usbmuxd_log(LL_NOTICE,"_handle_signal ~ opt_enable_exit = %d", opt_enable_exit);
 		if(opt_enable_exit) {
 			if (sig == SIGUSR1) {
 				usbmuxd_log(LL_INFO, "Caught SIGUSR1, checking if we can terminate (no more devices attached)...");
